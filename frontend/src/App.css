@@ -1,0 +1,89 @@
+/* ================== BASE ================== */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* ================== TEMAS ================== */
+body.light {
+  background-color: #e3f2fd;
+  color: #0d47a1;
+}
+
+body.dark {
+  background-color: #263238;
+  color: #eceff1;
+}
+
+/* ================== HEADER FIXO ================== */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px; /* altura fixa */
+  padding: 0 20px;
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  transition: background-color 0.3s, color 0.3s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+body.light header {
+  background-color: #64b5f6;
+  color: #e3f2fd;
+}
+
+body.dark header {
+  background-color: #37474f;
+  color: #eceff1;
+}
+
+/* Botão dentro do header */
+header .toggle-btn {
+  padding: 8px 16px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+
+body.light header .toggle-btn {
+  background-color: #e3f2fd;
+  color: #0d47a1;
+}
+
+body.dark header .toggle-btn {
+  background-color: #eceff1;
+  color: #263238;
+}
+
+/* ================== CONTEÚDO ================== */
+.content {
+  padding-top: 90px; /* >= altura do header (70px) + 20px de margem */
+  padding-left: 20px;
+  padding-right: 20px;
+  min-height: 100vh;
+}
+
+/* ================== LISTA DE PRODUTOS ================== */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+body.dark li {
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
