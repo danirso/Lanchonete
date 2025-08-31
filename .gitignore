@@ -43,3 +43,6 @@ build/
 # OS files
 Thumbs.db
 ehthumbs.db
+
+#vagrant stuff
+.vagrant
