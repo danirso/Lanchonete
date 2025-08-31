@@ -4,7 +4,9 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import Header from "./components/Header";
 import CardGrid from "./components/CardGrid";
 import Modal from "./components/Modal";
-import CartModal from "./components/CartModal"; // novo componente
+import CartModal from "./components/CartModal";
+import Toast from "./components/Toast";
+import styles from "./App.module.css";
 
 const PLACEHOLDER = "https://picsum.photos/800/600?grayscale";
 
@@ -18,9 +20,31 @@ export default function App() {
   const [produtoSelecionado, setProdutoSelecionado] = useState(null);
   const [quantidade, setQuantidade] = useState(1);
   const [carrinho, setCarrinho] = useState([]);
+  const [toasts, setToasts] = useState([]);
   const [mostrarCarrinho, setMostrarCarrinho] = useState(false);
 
   const API_URL = "/api/cardapio";
+
+  // Lógica para adicionar e remover toasts do array
+  const addToast = (message) => {
+    const id = Date.now();
+    setToasts((prevToasts) => [...prevToasts, { id, message }]);
+    setTimeout(() => {
+      setToasts((prevToasts) => prevToasts.filter((t) => t.id !== id));
+    }, 3000);
+  };
+
+  // Persistência do carrinho com localStorage
+  useEffect(() => {
+    const savedCart = localStorage.getItem('carrinho');
+    if (savedCart) {
+      setCarrinho(JSON.parse(savedCart));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('carrinho', JSON.stringify(carrinho));
+  }, [carrinho]);
 
   // tema
   useEffect(() => {
@@ -30,7 +54,12 @@ export default function App() {
 
   // esc / scroll
   useEffect(() => {
-    const onKey = (e) => e.key === "Escape" && setProdutoSelecionado(null);
+    const onKey = (e) => {
+      if (e.key === "Escape") {
+        setProdutoSelecionado(null);
+        setMostrarCarrinho(false);
+      }
+    };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
@@ -53,8 +82,8 @@ export default function App() {
           id: p?.id ?? `i-${idx}`,
           nome: p?.nome ?? "Produto sem nome",
           preco: Number(p?.preco ?? 0),
-          descricao: p?.descricao ?? "",
-          url: p?.url ?? PLACEHOLDER,
+          descricao: p?.descricao ?? "", // Adicionado
+          url: p?.url ?? PLACEHOLDER, // Adicionado
         }));
         if (mounted) setProdutos(sanitized);
       } catch (err) {
@@ -74,6 +103,20 @@ export default function App() {
               preco: 18.5,
               descricao: "Demo: hambúrguer com salada fresca, queijo e molho especial.",
               url: "https://picsum.photos/600/360?random=2",
+            },
+            {
+              id: "m3",
+              nome: "Batata Frita (demo)",
+              preco: 8.0,
+              descricao: "Demo: porção de batatas fritas crocantes.",
+              url: "https://picsum.photos/600/360?random=3",
+            },
+            {
+              id: "m4",
+              nome: "Refrigerante (demo)",
+              preco: 5.5,
+              descricao: "Demo: lata de refrigerante 350ml.",
+              url: "https://picsum.photos/600/360?random=4",
             },
           ]);
         }
@@ -95,7 +138,25 @@ export default function App() {
       }
       return [...prev, { ...produto, quantidade: qtd }];
     });
-    setProdutoSelecionado(null); // fecha modal após adicionar
+    setProdutoSelecionado(null);
+    addToast(`${qtd}x ${produto.nome} adicionado(s) ao carrinho!`);
+  };
+
+  // novas funções para o carrinho
+  const removerItemDoCarrinho = (id) => {
+    setCarrinho((prev) => prev.filter(item => item.id !== id));
+  };
+  
+  const atualizarQuantidadeItem = (id, novaQuantidade) => {
+    if (novaQuantidade < 1) {
+      removerItemDoCarrinho(id);
+      return;
+    }
+    setCarrinho((prev) =>
+      prev.map(item =>
+        item.id === id ? { ...item, quantidade: novaQuantidade } : item
+      )
+    );
   };
 
   return (
@@ -128,17 +189,23 @@ export default function App() {
           <CartModal
             carrinho={carrinho}
             onClose={() => setMostrarCarrinho(false)}
+            onRemove={removerItemDoCarrinho}
+            onUpdateQuantity={atualizarQuantidadeItem}
           />
         )}
 
         {carrinho.length > 0 && (
           <button
-            className="cart-fab"
+            className={styles.cartFab}
             onClick={() => setMostrarCarrinho(true)}
           >
             Seu Carrinho ({carrinho.reduce((acc, p) => acc + p.quantidade, 0)}) 🛒
           </button>
         )}
+
+        {toasts.map((toast) => (
+          <Toast key={toast.id} message={toast.message} />
+        ))}
       </div>
     </ErrorBoundary>
   );

@@ -1,9 +1,11 @@
+import styles from "./Header.module.css";
+
 export default function Header({ darkMode, toggleTheme }) {
   return (
-    <header>
-      <div className="title">Lanche & Prosa</div>
+    <header className={styles.header}>
+      <div className={styles.title}>Lanche & Prosa</div>
       <button
-        className="toggle-btn"
+        className={styles.toggleBtn}
         onClick={toggleTheme}
         aria-label="Alternar tema"
       >

@@ -1,5 +1,5 @@
 import React from "react";
-import "../App.css";
+import styles from "./ErrorBoundary.module.css";
 
 export default class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -15,7 +15,7 @@ export default class ErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="error-boundary">
+        <div className={styles.errorBoundary}>
           <h2>Ops — algo deu errado.</h2>
           <pre>{String(this.state.error)}</pre>
           <p>Abra o console do navegador e o terminal do dev server para detalhes.</p>

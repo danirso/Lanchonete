@@ -2,80 +2,29 @@
 * { box-sizing: border-box; }
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  font-family: 'Open Sans', sans-serif; /* Fonte mais moderna */
   transition: background-color 0.25s, color 0.25s;
   -webkit-font-smoothing: antialiased;
 }
 
-/* ================== TEMAS ================== */
+/* ================== TEMAS GLOBAIS ================== */
 body.light {
-  background-color: #fff3e0; /* bege claro para clareza */
-  color: #3e2723; /* marrom escuro */
+  background-color: #FFF8E1; /* Creme suave */
+  color: #4A2E1C; /* Marrom escuro */
 }
-
 body.dark {
-  background-color: #1b1b1b; /* fundo escuro */
-  color: #f5f5f5;
+  background-color: #2D2520; /* Marrom carvão */
+  color: #F8F5EC; /* Creme claro */
 }
 
-/* ================== HEADER FIXO ================== */
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 70px;
-  padding: 0 20px;
+/* ================== LAYOUT ================== */
+.app-root {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  z-index: 10000;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  flex-direction: column;
+  min-height: 100vh;
 }
-
-/* título */
-header .title {
-  flex: 1;
-  text-align: center;
-  font-size: 22px;
-  font-weight: 700;
-  user-select: none;
-}
-
-/* botão de tema */
-header .toggle-btn {
-  padding: 8px 14px;
-  font-size: 15px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 700;
-  transition: transform 0.12s;
-  background: transparent;
-}
-header .toggle-btn:active { transform: scale(0.98); }
-
-/* cores do header por tema */
-body.light header {
-  background-color: #d32f2f; /* vermelho chamativo */
-  color: #fff8e1;
-}
-body.dark header {
-  background-color: #ef5350; /* vermelho mais claro no dark */
-  color: #ffeb3b;
-}
-body.light header .toggle-btn {
-  background-color: #fff8e1;
-  color: #d32f2f;
-}
-body.dark header .toggle-btn {
-  background-color: #ffeb3b;
-  color: #ef5350;
-}
-
-/* ================== CONTEÚDO ================== */
 .content {
-  padding-top: 90px; /* deixa espaço para header */
+  padding-top: 90px;
   padding-left: 20px;
   padding-right: 20px;
   min-height: 100vh;
@@ -83,6 +32,9 @@ body.dark header .toggle-btn {
 .content h1 {
   text-align: center;
   margin: 8px 0 24px;
+  font-family: 'Bree Serif', serif; /* Título com mais personalidade */
+  font-size: 2.5em;
+  color: #E65100; /* Laranja vibrante */
 }
 
 /* carregando / mensagens */
@@ -90,222 +42,16 @@ body.dark header .toggle-btn {
   text-align: center;
   font-size: 18px;
   opacity: 0.9;
+  color: #8D6E63; /* Marrom claro */
 }
-
-/* ================== GRID DE CARDS ================== */
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 18px;
-  padding: 10px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* Card */
-.card {
-  background: #fff8e1; /* bege claro */
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-  transition: transform 180ms ease, box-shadow 180ms ease;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-}
-.card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 30px rgba(211,47,47,0.4); /* sombra vermelho */
-}
-
-/* imagem do card */
-.card-img {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-  background: #ffe0b2; /* fundo amarelo claro */
-}
-
-/* corpo do card */
-.card-body {
-  padding: 12px 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.card-title {
-  margin: 0;
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 1.1;
-}
-.card-price {
-  margin: 0;
-  font-size: 16px;
-  font-weight: 700;
-  color: #d32f2f;
-}
-.card-desc {
-  margin: 0;
-  font-size: 13px;
-  color: #5d4037;
-}
-
-/* modo escuro para cards */
-body.dark .card {
-  background: #2c2c2c;
-  color: #f5f5f5;
-}
-body.dark .card-price {
-  color: #ef5350;
-}
-body.dark .card-desc {
-  color: #ffeb3b;
-}
-
-/* ================== MODAL ================== */
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0,0,0,0.55);
-  z-index: 20000;
-  padding: 20px;
-  animation: fadeIn 160ms ease;
-}
-@keyframes fadeIn {
-  from { opacity: 0; } to { opacity: 1; }
-}
-
-.modal {
-  background: #fff8e1;
-  max-width: 720px;
-  width: 100%;
-  border-radius: 12px;
-  padding: 18px;
-  text-align: center;
-  position: relative;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.25);
-  animation: popIn 160ms ease;
-}
-@keyframes popIn {
-  from { transform: scale(0.98); opacity: 0; } to { transform: scale(1); opacity: 1; }
-}
-.modal-img {
-  width: 100%;
-  max-height: 360px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-.modal h2 { margin: 12px 0 6px; }
-.modal-price { font-size: 20px; margin: 6px 0 12px; color: #d32f2f; font-weight:700; }
-.modal-desc { color: #5d4037; font-size: 15px; }
-
-/* fechar */
-.modal-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  border: none;
-  background: transparent;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-/* cta */
-.cta-btn {
-  padding: 10px 14px;
-  border: none;
-  border-radius: 8px;
-  font-weight: 700;
-  cursor: pointer;
-  background: #d32f2f;
-  color: #fff8e1;
-}
-
-/* modo escuro para modal */
-body.dark .modal {
-  background: #2c2c2c;
-  color: #f5f5f5;
-}
-body.dark .modal-desc { color: #ffeb3b; }
-body.dark .modal-price { color: #ef5350; }
-body.dark .cta-btn { background: #ef5350; color: #ffeb3b; }
 
 /* bordas do error boundary */
 .error-boundary {
   padding: 30px;
   max-width: 800px;
   margin: 120px auto;
-  background: #ffebee;
-  color: #b71c1c;
+  background: #FFCDD2; /* Vermelho claro */
+  color: #B71C1C; /* Vermelho escuro */
   border-radius: 8px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.08);
 }
-
-/* ================== QUANTITY SELECTOR ================== */
-.qty-selector {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: #fff3e0;
-  border-radius: 8px;
-  padding: 4px;
-}
-.qty-selector input {
-  width: 50px;
-  text-align: center;
-  font-size: 16px;
-  border: none;
-  outline: none;
-  background: transparent;
-}
-.qty-btn {
-  width: 32px;
-  height: 32px;
-  border: none;
-  border-radius: 6px;
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
-  background: #d32f2f;
-  color: #fff8e1;
-  transition: background 0.2s, transform 0.1s;
-}
-.qty-btn:hover { background: #b71c1c; }
-.qty-btn:active { transform: scale(0.9); }
-
-/* dark mode */
-body.dark .qty-selector { background: #424242; }
-body.dark .qty-btn { background: #ef5350; color: #ffeb3b; }
-body.dark .qty-btn:hover { background: #e53935; }
-
-/* botão flutuante do carrinho */
-.cart-fab {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  padding: 12px 18px;
-  border-radius: 12px;
-  border: none;
-  background: #d32f2f;
-  color: #fff8e1;
-  font-size: 16px;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 700;
-  transition: transform 0.15s, background 0.2s;
-  z-index: 30000;
-}
-.cart-fab:hover { background: #b71c1c; }
-
-body.dark .cart-fab {
-  background: #ef5350;
-  color: #ffeb3b;
-}
-body.dark .cart-fab:hover { background: #e53935; }

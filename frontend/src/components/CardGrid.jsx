@@ -1,4 +1,5 @@
 import Card from "./Card";
+import styles from "./CardGrid.module.css";
 
 export default function CardGrid({ produtos, onSelect }) {
   if (produtos === null) {
@@ -9,9 +10,15 @@ export default function CardGrid({ produtos, onSelect }) {
   }
 
   return (
-    <div className="card-grid">
-      {produtos.map((item) => (
-        <Card key={item.id} item={item} onSelect={onSelect} />
+    <div className={styles.cardGrid}>
+      {produtos.map((item, index) => (
+        <Card
+          key={item.id}
+          item={item}
+          onSelect={onSelect}
+          // Adiciona um estilo inline para o delay da animação
+          style={{ animationDelay: `${index * 0.05}s` }}
+        />
       ))}
     </div>
   );

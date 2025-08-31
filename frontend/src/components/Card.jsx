@@ -1,3 +1,5 @@
+import styles from "./Card.module.css";
+
 const PLACEHOLDER = "https://picsum.photos/800/600?grayscale";
 
 export default function Card({ item, onSelect }) {
@@ -10,7 +12,7 @@ export default function Card({ item, onSelect }) {
   return (
     <article
       key={item.id}
-      className="card"
+      className={`${styles.card} ${styles.fadeIn}`} // Adicionada classe fadeIn
       onClick={() => onSelect(item)}
       role="button"
       tabIndex={0}
@@ -21,16 +23,16 @@ export default function Card({ item, onSelect }) {
       <img
         src={item.url || PLACEHOLDER}
         alt={item.nome}
-        className="card-img"
+        className={styles.cardImg}
         onError={(e) => {
           e.currentTarget.onerror = null;
           e.currentTarget.src = PLACEHOLDER;
         }}
       />
-      <div className="card-body">
-        <h2 className="card-title">{item.nome}</h2>
-        <p className="card-price">R$ {preco}</p>
-        <p className="card-desc">{descricaoCurta}</p>
+      <div className={styles.cardBody}>
+        <h2 className={styles.cardTitle}>{item.nome}</h2>
+        <p className={styles.cardPrice}>R$ {preco}</p>
+        <p className={styles.cardDesc}>{descricaoCurta}</p>
       </div>
     </article>
   );
