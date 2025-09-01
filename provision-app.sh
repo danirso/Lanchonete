@@ -5,14 +5,43 @@ apt-get update -y
 apt-get install -y git curl build-essential
 
 echo ">>> Criando arquivo .env para o backend..."
-cat <<EOF > /home/vagrant/app/backend/.env
-DB_HOST=192.168.56.12
-DB_USER=lanchonete
-DB_PASS=123456
-DB_NAME=lanchonete
-PORT=4000
-EOF
-chown vagrant:vagrant /home/vagrant/app/backend/.env
+
+ENV_FILE="/home/vagrant/app/backend/.env"
+ENV_EXAMPLE_FILE="/home/vagrant/app/backend/.env.example"
+
+
+if [ ! -f "$ENV_FILE" ]; then
+    if [ -f "$ENV_EXAMPLE_FILE" ]; then
+        echo ".env não encontrado. Copiando de .env.example..."
+        cp "$ENV_EXAMPLE_FILE" "$ENV_FILE"
+    else
+        echo ".env e .env.example não encontrados. Criando .env vazio..."
+        touch "$ENV_FILE"
+    fi
+fi
+
+
+update_env_var() {
+    local VAR_NAME=$1
+    local VAR_VALUE=$2
+    local ENV_FILE_PATH=$3
+
+    if grep -q "^${VAR_NAME}=" "$ENV_FILE_PATH"; then
+        sed -i "s/^${VAR_NAME}=.*/${VAR_NAME}=${VAR_VALUE}/" "$ENV_FILE_PATH"
+        echo "Variável '${VAR_NAME}' atualizada no .env."
+    else
+        echo "${VAR_NAME}=${VAR_VALUE}" >> "$ENV_FILE_PATH"
+        echo "Variável '${VAR_NAME}' adicionada ao .env."
+    fi
+}
+
+update_env_var "DB_HOST" "192.168.56.12" "$ENV_FILE"
+update_env_var "DB_USER" "lanchonete" "$ENV_FILE"
+update_env_var "DB_PASS" "123456" "$ENV_FILE"
+update_env_var "DB_NAME" "lanchonete" "$ENV_FILE"
+update_env_var "PORT" "4000" "$ENV_FILE"
+        
+chown vagrant:vagrant "$ENV_FILE"
 
 echo ">>> Executando instalação do NVM, Node, PM2 e dependências como usuário 'vagrant'..."
 sudo -u vagrant bash <<'EOF'

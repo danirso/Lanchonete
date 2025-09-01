@@ -12,7 +12,6 @@ Vagrant.configure("2") do |config|
     bd.vm.network "private_network", ip: "192.168.56.12"
     bd.vm.provision "shell", path: "provision-db.sh"
 
-    # Bloco para forçar VirtualBox e ativar a GUI
     bd.vm.provider "virtualbox" do |vb|
       vb.name = "Lanchonete-DB"
     end
@@ -24,10 +23,9 @@ Vagrant.configure("2") do |config|
     app.vm.hostname = "app"
     app.vm.network "private_network", ip: "192.168.56.11"
     app.vm.synced_folder ".", "/home/vagrant/app", type: "rsync",
-      rsync__exclude: [".git","node_modules/"]
+      rsync__exclude: [".git","node_modules/","backend/.env.example","backend/.env"]
     app.vm.provision "shell", path: "provision-app.sh"
 
-    # Bloco para forçar VirtualBox, definir memória e ativar a GUI
     app.vm.provider "virtualbox" do |vb|
       vb.memory = "2048"
       vb.name = "Lanchonete-App"
@@ -43,7 +41,6 @@ Vagrant.configure("2") do |config|
     proxy.vm.synced_folder "./nginx", "/vagrant_nginx"
     proxy.vm.provision "shell", path: "provision-proxy.sh"
 
-    # Bloco para forçar VirtualBox e ativar a GUI
     proxy.vm.provider "virtualbox" do |vb|
       vb.name = "Lanchonete-Proxy"
     end
