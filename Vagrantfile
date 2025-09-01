@@ -23,7 +23,7 @@ Vagrant.configure("2") do |config|
     app.vm.hostname = "app"
     app.vm.network "private_network", ip: "192.168.56.11"
     app.vm.synced_folder ".", "/home/vagrant/app", type: "rsync",
-      rsync__exclude: [".git","node_modules/","backend/.env.example","backend/.env"]
+      rsync__exclude: [".vagrant/",".git","node_modules/","backend/.env.example","backend/.env"]
     app.vm.provision "shell", path: "provision-app.sh"
 
     app.vm.provider "virtualbox" do |vb|
