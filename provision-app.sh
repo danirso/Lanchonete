@@ -79,8 +79,7 @@ pm2 save
 EOF
 
 echo ">>> Configurando o serviço de inicialização do PM2..."
-# O comando 'pm2 startup' gera um comando que precisa ser rodado como root.
-# Nós capturamos esse comando e o executamos.
+
 GENERATED_CMD=$(sudo -u vagrant bash -c 'export HOME=/home/vagrant; export NVM_DIR="/home/vagrant/.nvm"; [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"; pm2 startup systemd -u vagrant --hp /home/vagrant')
 sudo -E bash -c "$GENERATED_CMD"
 
