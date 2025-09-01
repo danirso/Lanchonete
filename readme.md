@@ -118,3 +118,6 @@ Este endereço aponta para o proxy reverso (Nginx), que distribui o tráfego par
     2.  Acesse a VM da aplicação com `vagrant ssh app`.
     3.  Dentro da VM, verifique o status dos serviços com `pm2 list`. Ambos `backend` e `frontend` devem estar com o status `online`.
     4.  Se algum estiver `errored` ou com muitos `restarts`, verifique os logs com `pm2 logs <nome_do_processo>` para encontrar a causa do erro.
+* **Pode ser que o .env nao seja criado corretamente, nesse caso crie-o manualmente assim:**
+    1.  Copie o .env.example e cole no mesmo diretorio
+    2.  Edite o arquivo copiado e deixe o nome apenas como .env
