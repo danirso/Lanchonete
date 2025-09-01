@@ -70,10 +70,19 @@ cd /home/vagrant/app
 npm install --prefix backend
 npm install --prefix frontend
 
+# Roda o seeder
+echo ">>> Rodando seeder para popular o banco..."
+cd /home/vagrant/app/backend
+npx babel-node seed/seeder.js || node seed/seeder.js
+
 # Instala e configura o PM2
 npm install -g pm2
-pm2 start "npm run dev --prefix backend" --name "backend"
-pm2 start "npm run dev --prefix frontend" --name "frontend"
+cd /home/vagrant/app/backend
+pm2 start npm --name "backend" -- run dev
+
+cd /home/vagrant/app/frontend
+pm2 start npm --name "frontend" -- run dev
+
 pm2 save
 
 EOF

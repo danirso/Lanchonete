@@ -21,7 +21,7 @@ async function seed() {
         nome VARCHAR(100) NOT NULL,
         preco DECIMAL(10,2) NOT NULL,
         descricao TEXT,
-        url TEXT,
+        url TEXT
       );
     `);
 
@@ -37,8 +37,8 @@ async function seed() {
       ["Cookies do Gutão", 10.00, "Deu vontade de um doce? O Gutão resolve! Nossos cookies são a pedida certa pra matar sua fome de algo delicioso. Receita caprichada, sabor de verdade e muito chocolate. É só pedir que a felicidade chega quentinha aí na sua porta!", "./images/cookie.jpg"]
     ];
 
-    for (const [nome, preco] of produtos) {
-      await db.query("INSERT INTO produtos (nome, preco) VALUES (?, ?)", [nome, preco]);
+    for (const [nome, preco, descricao, url] of produtos) {
+      await db.query("INSERT INTO produtos (nome, preco, descricao, url) VALUES (?, ?, ?, ?)", [nome, preco, descricao, url]);
     }
 
     console.log("✅ Seed finalizado com sucesso!");
