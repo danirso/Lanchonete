@@ -16,7 +16,7 @@ const db = await mysql.createConnection({
   database: process.env.DB_NAME
 });
 
-// Rota de teste
+
 app.get("/api/cardapio", async (req, res) => {
   try {
     const [rows] = await db.query("SELECT * FROM produtos");
@@ -25,6 +25,7 @@ app.get("/api/cardapio", async (req, res) => {
     res.status(500).json({ error: "Erro ao buscar cardápio" });
   }
 });
+
 
 app.listen(process.env.PORT, () => {
   console.log(`🚀 Backend rodando na porta ${process.env.PORT}`);

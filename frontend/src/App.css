@@ -1,0 +1,57 @@
+/* ================== BASE ================== */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: 'Open Sans', sans-serif; /* Fonte mais moderna */
+  transition: background-color 0.25s, color 0.25s;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ================== TEMAS GLOBAIS ================== */
+body.light {
+  background-color: #FFF8E1; /* Creme suave */
+  color: #4A2E1C; /* Marrom escuro */
+}
+body.dark {
+  background-color: #2D2520; /* Marrom carvão */
+  color: #F8F5EC; /* Creme claro */
+}
+
+/* ================== LAYOUT ================== */
+.app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.content {
+  padding-top: 90px;
+  padding-left: 20px;
+  padding-right: 20px;
+  min-height: 100vh;
+}
+.content h1 {
+  text-align: center;
+  margin: 8px 0 24px;
+  font-family: 'Bree Serif', serif; /* Título com mais personalidade */
+  font-size: 2.5em;
+  color: #E65100; /* Laranja vibrante */
+}
+
+/* carregando / mensagens */
+.loading {
+  text-align: center;
+  font-size: 18px;
+  opacity: 0.9;
+  color: #8D6E63; /* Marrom claro */
+}
+
+/* bordas do error boundary */
+.error-boundary {
+  padding: 30px;
+  max-width: 800px;
+  margin: 120px auto;
+  background: #FFCDD2; /* Vermelho claro */
+  color: #B71C1C; /* Vermelho escuro */
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}

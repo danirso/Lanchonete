@@ -1,0 +1,47 @@
+/* ================== QUANTITY SELECTOR ================== */
+.qtySelector {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #FFF3E1; /* Creme claro */
+  border-radius: 8px;
+  padding: 4px;
+  border: 1px solid #FFAB91; /* Borda laranja clara */
+}
+.qtySelector input {
+  width: 50px;
+  text-align: center;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #4A2E1C; /* Marrom escuro */
+}
+.qtyBtn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 6px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  background: #FF7043; /* Laranja mais vivo */
+  color: #FFFFFF; /* Texto branco */
+  transition: background 0.2s, transform 0.1s;
+}
+.qtyBtn:hover { background: #E65100; } /* Laranja vibrante */
+.qtyBtn:active { transform: scale(0.9); }
+
+/* dark mode */
+:global(body.dark) .qtySelector {
+  background: #4A2E1C; /* Marrom escuro */
+  border: 1px solid #795548; /* Marrom */
+}
+:global(body.dark) .qtySelector input {
+  color: #F8F5EC; /* Creme claro */
+}
+:global(body.dark) .qtyBtn {
+  background: #FFB74D; /* Laranja no modo escuro */
+  color: #2D2520; /* Marrom carvão */
+}
+:global(body.dark) .qtyBtn:hover { background: #FFA726; } /* Laranja mais forte */
