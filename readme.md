@@ -121,3 +121,5 @@ Este endereço aponta para o proxy reverso (Nginx), que distribui o tráfego par
 * **Pode ser que o .env nao seja criado corretamente, nesse caso crie-o manualmente assim:**
     1.  Copie o .env.example e cole no mesmo diretorio
     2.  Edite o arquivo copiado e deixe o nome apenas como .env
+    3.  Entre na vm do backend com o comando `vagrant ssh app`
+    4.  rode o comando `pm2 restart backend`
