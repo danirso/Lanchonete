@@ -1,9 +1,13 @@
 import QuantitySelector from "./QuantitySelector";
 import styles from "./Modal.module.css";
+import cookieImg from "../images/cookie.jpg";
 
 const PLACEHOLDER = "https://picsum.photos/800/600?grayscale";
 
 export default function Modal({ produto, quantidade, setQuantidade, onClose, onAdd }) {
+  // Verificação de nulidade no objeto 'produto'
+  const imageUrl = produto?.url?.startsWith("http") ? produto.url : cookieImg;
+
   return (
     <div className={styles.modalOverlay} onClick={onClose}>
       <div
@@ -17,8 +21,8 @@ export default function Modal({ produto, quantidade, setQuantidade, onClose, onA
         </button>
 
         <img
-          src={produto.url || PLACEHOLDER}
-          alt={produto.nome}
+          src={imageUrl || PLACEHOLDER}
+          alt={produto?.nome}
           className={styles.modalImg}
           onError={(e) => {
             e.currentTarget.onerror = null;
@@ -26,12 +30,12 @@ export default function Modal({ produto, quantidade, setQuantidade, onClose, onA
           }}
         />
 
-        <h2>{produto.nome}</h2>
+        <h2>{produto?.nome}</h2>
         <p className={styles.modalPrice}>
-          R$ {Number(produto.preco ?? 0).toFixed(2)}
+          R$ {Number(produto?.preco ?? 0).toFixed(2)}
         </p>
         <p className={styles.modalDesc}>
-          {produto.descricao || "Sem descrição disponível."}
+          {produto?.descricao || "Sem descrição disponível."}
         </p>
 
         <div className={styles.quantityContainer}>

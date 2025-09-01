@@ -165,7 +165,7 @@ export default function App() {
         <Header darkMode={darkMode} toggleTheme={toggleTheme} />
 
         <main className="content">
-          <h1>🍔 Cardápio da Lanchonete</h1>
+          <h1>🍔 Cardápio 🍟</h1>
           <CardGrid
             produtos={produtos}
             onSelect={(item) => {

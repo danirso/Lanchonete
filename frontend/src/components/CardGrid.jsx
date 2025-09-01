@@ -16,7 +16,6 @@ export default function CardGrid({ produtos, onSelect }) {
           key={item.id}
           item={item}
           onSelect={onSelect}
-          // Adiciona um estilo inline para o delay da animação
           style={{ animationDelay: `${index * 0.05}s` }}
         />
       ))}
