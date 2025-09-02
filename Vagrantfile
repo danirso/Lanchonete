@@ -7,7 +7,7 @@ Vagrant.configure("2") do |config|
   config.vm.boot_timeout = 1800
   # 1. Máquina Virtual do Banco de Dados (MySQL)
   config.vm.define "bd" do |bd|
-    bd.vm.box = "ubuntu/jammy64"
+    bd.vm.box = "bento/ubuntu-22.04"
     bd.vm.hostname = "db"
     bd.vm.network "private_network", ip: "192.168.56.12"
     bd.vm.provision "shell", path: "provision-db.sh"
@@ -19,7 +19,7 @@ Vagrant.configure("2") do |config|
 
   # 2. Máquina Virtual da Aplicação (Node.js + React)
   config.vm.define "app" do |app|
-    app.vm.box = "ubuntu/jammy64"
+    app.vm.box = "bento/ubuntu-22.04"
     app.vm.hostname = "app"
     app.vm.network "private_network", ip: "192.168.56.11"
     app.vm.synced_folder ".", "/home/vagrant/app", type: "rsync",
@@ -34,7 +34,7 @@ Vagrant.configure("2") do |config|
 
   # 3. Máquina Virtual do Proxy Reverso (Nginx) 
   config.vm.define "proxy" do |proxy|
-    proxy.vm.box = "ubuntu/jammy64"
+    proxy.vm.box = "bento/ubuntu-22.04"
     proxy.vm.hostname = "proxy"
     proxy.vm.network "forwarded_port", guest: 80, host: 8080
     proxy.vm.network "private_network", ip: "192.168.56.10"
