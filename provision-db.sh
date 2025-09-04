@@ -30,4 +30,5 @@ EOF
 
 echo ">>> Banco de dados configurado!"
 
-sudo ip link set eh0 down
+#desliga o adaptador de rede
+sudo ip link set eth0 down

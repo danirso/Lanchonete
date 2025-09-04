@@ -94,4 +94,5 @@ sudo -E bash -c "$GENERATED_CMD"
 
 echo ">>> Ambiente da aplicação configurado com sucesso!"
 
+# desliga o adaptador de rede
 sudo ip link set eth0 down
