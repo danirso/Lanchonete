@@ -29,3 +29,5 @@ CREATE TABLE produtos (
 EOF
 
 echo ">>> Banco de dados configurado!"
+
+sudo ip link set eh0 down

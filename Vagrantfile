@@ -9,7 +9,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "bd" do |bd|
     bd.vm.box = "bento/ubuntu-22.04"
     bd.vm.hostname = "db"
-    bd.vm.network "private_network", ip: "192.168.56.12"
+    bd.vm.network "private_network", ip: "10.0.0.30", virtualbox__intnet: "lan_app"
     bd.vm.provision "shell", path: "provision-db.sh"
 
     bd.vm.provider "virtualbox" do |vb|
@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "app" do |app|
     app.vm.box = "bento/ubuntu-22.04"
     app.vm.hostname = "app"
-    app.vm.network "private_network", ip: "192.168.56.11"
+    app.vm.network "private_network", ip: "10.0.0.20", virtualbox__intnet: "lan_app"
     app.vm.synced_folder ".", "/home/vagrant/app", type: "rsync",
       rsync__exclude: [".vagrant/",".git","node_modules/","backend/.env.example","backend/.env"]
     app.vm.provision "shell", path: "provision-app.sh"
@@ -37,7 +37,7 @@ Vagrant.configure("2") do |config|
     proxy.vm.box = "bento/ubuntu-22.04"
     proxy.vm.hostname = "proxy"
     proxy.vm.network "forwarded_port", guest: 80, host: 8080
-    proxy.vm.network "private_network", ip: "192.168.56.10"
+    proxy.vm.network "private_network", ip: "10.0.0.10", virtualbox__intnet: "lan_app"
     proxy.vm.synced_folder "./nginx", "/vagrant_nginx"
     proxy.vm.provision "shell", path: "provision-proxy.sh"
 

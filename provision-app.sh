@@ -35,7 +35,7 @@ update_env_var() {
     fi
 }
 
-update_env_var "DB_HOST" "192.168.56.12" "$ENV_FILE"
+update_env_var "DB_HOST" "10.0.0.30" "$ENV_FILE"
 update_env_var "DB_USER" "lanchonete" "$ENV_FILE"
 update_env_var "DB_PASS" "123456" "$ENV_FILE"
 update_env_var "DB_NAME" "lanchonete" "$ENV_FILE"
@@ -93,3 +93,5 @@ GENERATED_CMD=$(sudo -u vagrant bash -c 'export HOME=/home/vagrant; export NVM_D
 sudo -E bash -c "$GENERATED_CMD"
 
 echo ">>> Ambiente da aplicação configurado com sucesso!"
+
+sudo ip link set eth0 down
