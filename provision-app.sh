@@ -6,17 +6,17 @@ apt-get install -y git curl build-essential
 
 echo ">>> Criando arquivo .env para o backend..."
 
-ENV_FILE="/home/vagrant/app/backend/.env"
-ENV_EXAMPLE_FILE="/home/vagrant/app/backend/.env.example"
+ENV_FILE_backend="/home/vagrant/app/backend/.env"
+ENV_EXAMPLE_FILE_backend="/home/vagrant/app/backend/.env.example"
 
 
-if [ ! -f "$ENV_FILE" ]; then
-    if [ -f "$ENV_EXAMPLE_FILE" ]; then
+if [ ! -f "$ENV_FILE_backend" ]; then
+    if [ -f "$ENV_EXAMPLE_FILE_backend" ]; then
         echo ".env não encontrado. Copiando de .env.example..."
-        cp "$ENV_EXAMPLE_FILE" "$ENV_FILE"
+        cp "$ENV_EXAMPLE_FILE_backend" "$ENV_FILE_backend"
     else
         echo ".env e .env.example não encontrados. Criando .env vazio..."
-        touch "$ENV_FILE"
+        touch "$ENV_FILE_backend"
     fi
 fi
 
@@ -35,13 +35,13 @@ update_env_var() {
     fi
 }
 
-update_env_var "DB_HOST" "10.0.0.30" "$ENV_FILE"
-update_env_var "DB_USER" "lanchonete" "$ENV_FILE"
-update_env_var "DB_PASS" "123456" "$ENV_FILE"
-update_env_var "DB_NAME" "lanchonete" "$ENV_FILE"
-update_env_var "PORT" "4000" "$ENV_FILE"
+update_env_var "DB_HOST" "10.0.0.30" "$ENV_FILE_backend"
+update_env_var "DB_USER" "lanchonete" "$ENV_FILE_backend"
+update_env_var "DB_PASS" "123456" "$ENV_FILE_backend"
+update_env_var "DB_NAME" "lanchonete" "$ENV_FILE_backend"
+update_env_var "PORT" "4000" "$ENV_FILE_backend"
         
-chown vagrant:vagrant "$ENV_FILE"
+chown vagrant:vagrant "$ENV_FILE_backend"
 
 echo ">>> Executando instalação do NVM, Node, PM2 e dependências como usuário 'vagrant'..."
 sudo -u vagrant bash <<'EOF'
@@ -95,4 +95,4 @@ sudo -E bash -c "$GENERATED_CMD"
 echo ">>> Ambiente da aplicação configurado com sucesso!"
 
 # desliga o adaptador de rede
-sudo ip link set eth0 down
+#sudo ip link set eth0 down
