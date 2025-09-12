@@ -43,12 +43,12 @@ Com os pré-requisitos instalados, siga os passos abaixo para iniciar o ambiente
 
 1.  **Clone o repositório:**
     ```bash
-    git clone <URL_DO_SEU_REPOSITORIO_GIT>
+    git clone https://github.com/danirso/Lanchonete.git
     ```
 
 2.  **Acesse a pasta do projeto:**
     ```bash
-    cd <NOME_DA_PASTA_DO_PROJETO>
+    cd Lanchonete
     ```
 
 3.  **Inicie o ambiente com Vagrant:**
@@ -91,17 +91,17 @@ Aqui estão algumas telas da aplicação em funcionamento:
 **Menu Principal do Cardápio**
 
 Aqui você pode ver a lista de itens disponíveis na lanchonete.
-![Menu Principal](images/main.png)
+![Menu Principal](images/main.PNG)
 
 **Detalhes do Item (Modal)**
 
 Ao clicar em um item do cardápio, um modal é exibido com mais informações e opções de personalização.
-![Modal de Detalhes do Item](images/modal.png)
+![Modal de Detalhes do Item](images/modal.PNG)
 
 **Carrinho de Compras**
 
 Quando itens são adicionados, o carrinho fica visível, permitindo revisar e finalizar o pedido.
-![Carrinho de Compras Aberto](images/cart.png)
+![Carrinho de Compras Aberto](images/cart.PNG)
 
 ## Gerenciando o Ambiente
 
