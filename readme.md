@@ -43,12 +43,12 @@ Com os pré-requisitos instalados, siga os passos abaixo para iniciar o ambiente
 
 1.  **Clone o repositório:**
     ```bash
-    git clone <URL_DO_SEU_REPOSITORIO_GIT>
+    git clone [<URL_DO_SEU_REPOSITORIO_GIT>](https://github.com/danirso/Lanchonete.git)
     ```
 
 2.  **Acesse a pasta do projeto:**
     ```bash
-    cd <NOME_DA_PASTA_DO_PROJETO>
+    cd Lanchonete
     ```
 
 3.  **Inicie o ambiente com Vagrant:**
