@@ -1,30 +1,30 @@
-# Lanchonete App
+# Projeto Lanchonete (Ambiente de Desenvolvimento com Vagrant)
 
-Sistema de cardápio digital para lanchonetes, com arquitetura baseada em múltiplas VMs provisionadas via **Vagrant**.
+Este repositório contém o código-fonte e a configuração de ambiente para o projeto Lanchonete. O ambiente é totalmente automatizado utilizando Vagrant e VirtualBox, criando uma arquitetura de 3 máquinas virtuais isoladas que se comunicam através de uma rede privada.
 
----
+## Arquitetura e Fluxo de Comunicação
 
-## Arquitetura do Projeto
+O projeto é dividido em três máquinas virtuais (VMs) que formam uma arquitetura de 3 camadas, conectadas por uma rede interna (`10.0.0.0/24`) para garantir a segurança e o isolamento dos serviços. O fluxo de uma requisição do usuário é o seguinte:
 
-A arquitetura foi projetada para garantir que **apenas o proxy (Nginx)** seja acessível pelo usuário final.  
-O frontend funciona como a ponte entre o usuário e o backend, e apenas o backend se comunica com o banco de dados.  
-Isso mantém o banco de dados e o backend protegidos dentro da infraestrutura.
+`Usuário (Navegador) → VM proxy → VM app (Frontend → Backend) → VM db`
 
-```mermaid
-flowchart LR
-    User[Usuário] --> Proxy[Nginx Proxy (VM proxy - localhost:8080)]
+Aqui está o detalhe de cada componente:
 
-    Proxy --> Frontend[Frontend React (VM app - porta 3000)]
-    Frontend <--> Backend[Backend Node.js/Express (VM app - porta 4000)]
+* **VM `proxy` (Nginx - O Ponto de Entrada)**
+    * **IP:** `10.0.0.10`
+    * **Responsabilidade:** É a única porta de entrada da aplicação, recebendo todo o tráfego do usuário através do endereço `http://localhost:8080`.
+    * **Ação:** Atua como um proxy reverso que encaminha **todas as requisições** exclusivamente para o **Serviço de Frontend** na VM `app`. Esta VM não tem conhecimento direto do backend ou do banco de dados.
 
-    Backend <--> DB[(MySQL - VM db - porta 3306)]
+* **VM `app` (Node.js/React - O Cérebro da Aplicação)**
+    * **IP:** `10.0.0.20`
+    * **Responsabilidade:** Hospeda os dois serviços principais da aplicação.
+    * **Serviço de Frontend (React + Vite):** Roda na porta `3000`. Recebe as requisições do Nginx, renderiza a interface para o usuário e, quando precisa de dados (ex: carregar o cardápio), faz uma chamada de API. O servidor de desenvolvimento do Vite intercepta essa chamada e a repassa para o serviço de Backend na mesma VM.
+    * **Serviço de Backend (Node.js + Express):** Roda na porta `4000`. Recebe requisições **apenas** do serviço de Frontend. É responsável por toda a lógica de negócio e se comunica com a `VM db` para persistir e consultar dados.
 
-    %% Estilização
-    classDef vm fill:#2e86de,stroke:#1b4f72,color:#fff;
-    classDef db fill:#27ae60,stroke:#145a32,color:#fff;
-    class Proxy,Frontend,Backend vm;
-    class DB db;
-```
+* **VM `db` (MySQL - O Armazenamento Seguro)**
+    * **IP:** `10.0.0.30`
+    * **Responsabilidade:** Máquina dedicada exclusivamente ao banco de dados MySQL.
+    * **Ação:** Aceita conexões apenas da `VM app` (Backend) através da rede privada, garantindo que o banco de dados não fique exposto à internet ou a outras partes da infraestrutura.
 
 ## Pré-requisitos
 
@@ -57,7 +57,7 @@ Com os pré-requisitos instalados, siga os passos abaixo para iniciar o ambiente
     ```
     Este único comando fará tudo por você, incluindo baixar o sistema operacional, criar as 3 VMs e rodar todos os scripts de configuração.
 
-    > **Nota:** A primeira vez que você rodar o `vagrant up`, o processo pode levar bastante tempo (é normal, demora mesmo), dependendo da sua conexão com a internet e do desempenho do seu computador. Pegue um café! ☕
+    > **Nota:** A primeira vez que você rodar o `vagrant up`, o processo pode levar bastante tempo, dependendo da sua conexão com a internet e do desempenho do seu computador. Pegue um café! ☕
 
 ## Fluxo de Trabalho de Desenvolvimento (Importante!)
 
@@ -82,7 +82,7 @@ Após o comando `vagrant up` ser concluído, a aplicação estará no ar.
 
 Abra seu navegador e acesse: **[http://localhost:8080](http://localhost:8080)**
 
-Este endereço aponta para o proxy reverso (Nginx), que distribui o tráfego para o frontend e backend da aplicação de forma transparente.
+Este endereço aponta para o proxy reverso (Nginx), que direciona o tráfego para o frontend da aplicação de forma transparente.
 
 ## Gerenciando o Ambiente
 
@@ -136,8 +136,9 @@ Este endereço aponta para o proxy reverso (Nginx), que distribui o tráfego par
     2.  Acesse a VM da aplicação com `vagrant ssh app`.
     3.  Dentro da VM, verifique o status dos serviços com `pm2 list`. Ambos `backend` e `frontend` devem estar com o status `online`.
     4.  Se algum estiver `errored` ou com muitos `restarts`, verifique os logs com `pm2 logs <nome_do_processo>` para encontrar a causa do erro.
-* **Pode ser que o .env nao seja criado corretamente, nesse caso crie-o manualmente assim:**
-    1.  Copie o .env.example e cole no mesmo diretorio
-    2.  Edite o arquivo copiado e deixe o nome apenas como .env
-    3.  Entre na vm do backend com o comando `vagrant ssh app`
-    4.  rode o comando `pm2 restart backend`
+* **Pode ser que o .env não seja criado corretamente:**
+    * Caso o backend não inicie, o arquivo `.env` pode não ter sido criado. Para corrigir:
+    1.  Acesse a VM com `vagrant ssh app`.
+    2.  Navegue até a pasta do backend: `cd /home/vagrant/app/backend`.
+    3.  Copie o arquivo de exemplo: `cp .env.example .env`.
+    4.  Reinicie o backend: `pm2 restart backend`.
