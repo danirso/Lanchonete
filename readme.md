@@ -12,12 +12,12 @@ Isso mantém o banco de dados e o backend protegidos dentro da infraestrutura.
 
 ```mermaid
 flowchart LR
-    User[Usuário] --> Proxy[Nginx Proxy (VM proxy)<br>http://localhost:8080]
+    User[Usuário] --> Proxy[Nginx Proxy (VM proxy - localhost:8080)]
 
-    Proxy --> Frontend[Frontend React (VM app)<br>Porta 3000]
-    Frontend <--> Backend[Backend Node.js/Express (VM app)<br>Porta 4000]
+    Proxy --> Frontend[Frontend React (VM app - porta 3000)]
+    Frontend <--> Backend[Backend Node.js/Express (VM app - porta 4000)]
 
-    Backend <--> DB[(MySQL - VM db)<br>Porta 3306]
+    Backend <--> DB[(MySQL - VM db - porta 3306)]
 
     %% Estilização
     classDef vm fill:#2e86de,stroke:#1b4f72,color:#fff;
