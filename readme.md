@@ -1,12 +1,30 @@
-# Projeto Lanchonete (Ambiente de Desenvolvimento com Vagrant)
+# Lanchonete App
 
-Este repositório contém o código-fonte e a configuração de ambiente para o projeto Lanchonete. O ambiente é totalmente automatizado utilizando Vagrant e VirtualBox, criando uma arquitetura de 3 máquinas virtuais: um proxy reverso com Nginx, um servidor de aplicação (Node.js/React) e um banco de dados (MySQL).
+Sistema de cardápio digital para lanchonetes, com arquitetura baseada em múltiplas VMs provisionadas via **Vagrant**.
 
-## Arquitetura
+---
 
-* **VM `proxy`**: Roda o Nginx e atua como proxy reverso, direcionando o tráfego para o frontend e backend.
-* **VM `app`**: Roda a aplicação principal, com o backend Node.js na porta 4000 e o frontend React na porta 3000.
-* **VM `db`**: Roda o servidor de banco de dados MySQL.
+## Arquitetura do Projeto
+
+A arquitetura foi projetada para garantir que **apenas o proxy (Nginx)** seja acessível pelo usuário final.  
+O frontend funciona como a ponte entre o usuário e o backend, e apenas o backend se comunica com o banco de dados.  
+Isso mantém o banco de dados e o backend protegidos dentro da infraestrutura.
+
+```mermaid
+flowchart LR
+    User[Usuário] --> Proxy[Nginx Proxy (VM proxy)\nhttp://localhost:8080]
+
+    Proxy --> Frontend[Frontend React (VM app)\nPorta 3000]
+    Frontend <--> Backend[Backend Node.js/Express (VM app)\nPorta 4000]
+
+    Backend <--> DB[(MySQL - VM db)\nPorta 3306]
+
+    %% Estilização
+    classDef vm fill:#2e86de,stroke:#1b4f72,color:#fff;
+    classDef db fill:#27ae60,stroke:#145a32,color:#fff;
+    class Proxy,Frontend,Backend vm;
+    class DB db;
+```
 
 ## Pré-requisitos
 
